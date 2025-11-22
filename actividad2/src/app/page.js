@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState("");
+  const [sorted, setSorted] = useState(false);
 
   const addButtonHandler = () => {
     if (currentTask.trim() === "") return;
@@ -24,11 +25,12 @@ export default function Home() {
   };
 
   const ordenarTarea = () => {
-    setTasks((prev) =>[...prev].sort((a, b) => a.text.localeCompare(b.text)));
+    setTasks((prev) =>[...prev].sort((a, b) => sorted ? b.text.localeCompare(a.text) : a.text.localeCompare(b.text)));
+    setSorted((prev) => !prev)
   };
 
 
-
+  
 
 
   // Reto 1: Hacer que no se pueda agregar una tarea vacía 
@@ -54,10 +56,15 @@ export default function Home() {
           className="bg-red-500 text-white rounded-lg px-4 py-2"
           onClick={addButtonHandler}
         >
-          Agregar
+          ➕
         </button>
         <button className="bg-red-500 text-white rounded-lg px-4 py-2" onClick={() => ordenarTarea()}>
-          Ordenar
+          {sorted ? "🔽" : "🔼"}
+        </button> 
+
+        {/* boton para eliminar todas */}
+        <button className="bg-red-500 text-white rounded-lg px-4 py-2" onClick={() => setTasks([])}>
+          Delete All
         </button> 
       </div>
       <div className="flex flex-col gap-2">
