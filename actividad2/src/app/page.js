@@ -3,19 +3,37 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [tasks, setTasks] = useState(["Tarea 1", "Tarea 2"]);
+  const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState("");
 
   const addButtonHandler = () => {
     if (currentTask.trim() === "") return;
     if (tasks.includes(currentTask)) return; 
-    setTasks([...tasks, currentTask]);
+    setTasks([...tasks, { text: currentTask, done: false }]);
     setCurrentTask("");
   };
 
+  const marcarTarea = (index) => {
+    setTasks((prev) =>
+      prev.map((t, i) => (i === index ? { ...t, done: !t.done } : t))
+    );
+  };
+
+  const eliminarTarea = (index) => {
+    setTasks((prev) => prev.filter((t, i) => i !== index));
+  };
+
+  const ordenarTarea = () => {
+    setTasks((prev) =>[...prev].sort((a, b) => a.text.localeCompare(b.text)));
+  };
+
+
+
+
+
   // Reto 1: Hacer que no se pueda agregar una tarea vacía 
-  // Reto 2: Hacer que no se pueda agregar una tarea repetida
-  // Reto 3: Hacer que al dar click en una tarea, aparezca tachada (clase tailwind "line-through")
+  // Reto 2: Hacer que no se pueda agregar una tarea repetida -->
+  // Reto 3: Hacer que al dar click en una tarea, aparezca tachada (clase tailwind "line-through") --> HECHA
   // Reto 4: Hacer que al dar click en una tarea tachada, desaparezca la tarea
   // Reto 5: Poner un botón que organice las tareas alfabéticamente
   // Reto 6: Poner un botón que elimine todas las tareas
@@ -38,14 +56,20 @@ export default function Home() {
         >
           Agregar
         </button>
-        {/* <button className="bg-red-500 text-white rounded-lg px-4 py-2">
+        <button className="bg-red-500 text-white rounded-lg px-4 py-2" onClick={() => ordenarTarea()}>
           Ordenar
-        </button> */}
+        </button> 
       </div>
       <div className="flex flex-col gap-2">
         {tasks.map((task, index) => (
-          <div key={index} className="bg-red-200 rounded-lg px-2 py-1">
-            {task}
+          <div
+            key={index}
+            className={`bg-cyan-700 rounded-lg px-2 py-1 cursor-pointer ${
+              task.done ? "line-through" : ""
+            }`}
+            onClick={task.done ? () => eliminarTarea(index): () => marcarTarea(index)}
+          >
+            {task.text}
           </div>
         ))}
       </div>
