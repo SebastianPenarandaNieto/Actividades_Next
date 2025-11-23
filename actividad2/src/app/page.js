@@ -11,6 +11,7 @@ export default function Home() {
     if (currentTask.trim() === "") return;
     if (tasks.includes(currentTask)) return; 
     setTasks([...tasks, { text: currentTask, done: false }]);
+    setSorted(false)
     setCurrentTask("");
   };
 
@@ -33,9 +34,9 @@ export default function Home() {
   
 
 
-  // Reto 1: Hacer que no se pueda agregar una tarea vacía 
-  // Reto 2: Hacer que no se pueda agregar una tarea repetida -->
-  // Reto 3: Hacer que al dar click en una tarea, aparezca tachada (clase tailwind "line-through") --> HECHA
+  // Reto 1: Hacer que no se pueda agregar una tarea vacía
+  // Reto 2: Hacer que no se pueda agregar una tarea repetida
+  // Reto 3: Hacer que al dar click en una tarea, aparezca tachada (clase tailwind "line-through")
   // Reto 4: Hacer que al dar click en una tarea tachada, desaparezca la tarea
   // Reto 5: Poner un botón que organice las tareas alfabéticamente
   // Reto 6: Poner un botón que elimine todas las tareas
@@ -43,35 +44,47 @@ export default function Home() {
 
   return (
     <section className="bg-blue-100 p-4 min-h-screen">
-      <div className="my-2 flex gap-2 ">
+
+      {/* Contedenor de las opciones */}
+      <div className="my-2 flex gap-2 justify-center">
+
+        {/* Cuadro para solicitar nombre de tarea */}
         <input
-          className="bg-cyan-500 border border-cyan-900 rounded-lg p-2"
+          className="bg-cyan-300 border border-cyan-900 rounded-lg p-2 text-blue-900"
           type="text"
           value={currentTask}
           onChange={(e) => {
             setCurrentTask(e.target.value);
           }}
         />
+
+        {/* Boton para agregar tareas */}
         <button
-          className="bg-red-500 text-white rounded-lg px-4 py-2"
+          className="bg-green-500 text-white rounded-full ml-32 px-4 py-2"
           onClick={addButtonHandler}
         >
-          ➕
+          ✚
         </button>
-        <button className="bg-red-500 text-white rounded-lg px-4 py-2" onClick={() => ordenarTarea()}>
-          {sorted ? "🔽" : "🔼"}
+
+        {/* Boton para ordenar tareas */}
+        <button className="bg-amber-500 text-white rounded-full px-4 py-2" onClick={() => ordenarTarea()}>
+          {sorted ? "▲" : "▼"}
         </button> 
 
-        {/* boton para eliminar todas */}
-        <button className="bg-red-500 text-white rounded-lg px-4 py-2" onClick={() => setTasks([])}>
-          Delete All
+        {/* Boton para eliminar todas las tareas*/}
+        <button className="bg-red-500 text-white rounded-full px-4 py-2" onClick={() => setTasks([])}>
+          ✖
         </button> 
+
       </div>
-      <div className="flex flex-col gap-2">
+
+
+      {/* Contedenor de las tareas */}
+      <div className="flex flex-col gap-2 justify-center my-8">
         {tasks.map((task, index) => (
           <div
             key={index}
-            className={`bg-cyan-700 rounded-lg px-2 py-1 cursor-pointer ${
+            className={`bg-blue-800 rounded-lg px-2 py-1 cursor-pointer ${
               task.done ? "line-through" : ""
             }`}
             onClick={task.done ? () => eliminarTarea(index): () => marcarTarea(index)}
@@ -80,6 +93,8 @@ export default function Home() {
           </div>
         ))}
       </div>
+
+
     </section>
   );
 }
