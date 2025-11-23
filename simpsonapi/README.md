@@ -11,8 +11,8 @@ Aplicación hecha con **Next.js** y **React** para explorar personajes de *Los S
 - Estilos con TailwindCSS 
 
 ## Estructura
-/app/page.js          → Lógica principal 
-/components/Character.jsx  → Tarjeta y modal de personaje
+- /app/page.js                → Lógica principal 
+- /components/Character.jsx   → Tarjeta y modal de personaje
 
 ## Instalación
 ```bash
