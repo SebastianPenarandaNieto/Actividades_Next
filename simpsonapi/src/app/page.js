@@ -8,8 +8,7 @@ const API_BASE_URL = "https://thesimpsonsapi.com/api/characters";
 export default function SimpsonsPage() {
   const [nombre, setNombre] = useState("");
   const [data, setData] = useState([]);
-  const [ant, setAnt] = useState("");
-  const [next, setNext] = useState("");
+  const [personajeSeleccionado, setPersonajeSeleccionado] = useState(null);
   const [page, setPage] = useState(1);
 
    useEffect(() => {
@@ -67,10 +66,33 @@ export default function SimpsonsPage() {
       <div className="flex flex-wrap justify-center gap-8 p-4">
         {
           personajes_filtrados.map((personaje) => (
-            <Character key = {personaje.id} data = {personaje}></Character>
+            <Character 
+              key = {personaje.id} 
+              data = {personaje}
+              onClick={() => setPersonajeSeleccionado(personaje)}>
+            </Character>
           ))
         }
       </div>
+
+      {personajeSeleccionado && (
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-xl w-96 shadow-xl">
+            
+            <Character 
+              data={personajeSeleccionado} 
+              variant="detail"
+            />
+
+            <button
+              className="mt-4 bg-red-500 font-bold text-white px-4 py-2 rounded-lg w-full"
+              onClick={() => setPersonajeSeleccionado(null)}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   );
