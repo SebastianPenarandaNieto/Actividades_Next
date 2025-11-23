@@ -1,4 +1,4 @@
-# To-Do App (React + Next.js)
+# Administrador de Tareas (React + Next.js)
 
 Aplicación simple de lista de tareas construida con **React**, **Next.js** y **TailwindCSS**.
 Permite agregar, ordenar, marcar y eliminar tareas con una interfaz limpia y funcional.
